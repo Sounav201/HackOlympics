@@ -20,14 +20,7 @@ function setup() {
 
 
   moon= loadImage("./moon.png");
-    for (let x = 0; x < spritesheet.width; x += 32) {
-    for (let y = 0; y < spritesheet.height; y += 32) {
-      let img = spritesheet.get(x, y, 32, 32);
-      image(img, x, y);
-      textures.push(img);
-    }
-  }
-
+    
 
 
   for (let i = 0; i < 300; i++) {
@@ -37,7 +30,20 @@ function setup() {
     snow.push(new Snowflake(x, y, design));
   }
 }
+function rotateRect(x,y,myWidth,myHeight,angle){
+  rectMode(CENTER)
+  push()
+  translate(x,y)
+  rotate(radians(angle));
 
+  rect(0,0,myWidth,myHeight);
+  pop()
+  rectMode(CORNER)
+
+}
+
+let PlayerPosX=106
+let PlayerPosY=201
 function draw() {
   
   image(moon,800,750,800,0,150)
@@ -45,10 +51,18 @@ function draw() {
   background(0,0,102);
   zOff += 0.1;
   //Hill Start
-noStroke()
-fill(230,240,250)
-triangle(0,800,850,800,0,150)
-//Hill end
+  noStroke()
+  fill(230,240,250)
+  triangle(0,800,850,800,0,150)
+  //Hill end
+  //Character
+  noStroke()
+  fill(175,95,10)
+  
+  //rect(129,200,100,50);
+  rotateRect(PlayerPosX,PlayerPosY,100,50,38)
+  //translate(68,100)
+  //rotate(PI/3.0)
   snow.push(new Snowflake());
   
   for (flake of snow){
@@ -63,5 +77,22 @@ triangle(0,800,850,800,0,150)
     flake.render();
   }
 
+  
+}
+
+
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    PlayerPosY = PlayerPosY - 10;
+  } 
+  else if (keyCode === DOWN_ARROW) {
+   PlayerPosY = PlayerPosY + 10;
+  }
+  if (keyCode === LEFT_ARROW) {
+    PlayerPosX = PlayerPosX - 5;
+  } 
+  else if (keyCode === RIGHT_ARROW) {
+    PlayerPosX = PlayerPosX + 5;
+  }
   
 }
